@@ -1,0 +1,28 @@
+**Schema (MySQL v5.7)**
+
+    create table student(USN integer primary key,NAME varchar(10),PHNO integer,BRANCH varchar(4));
+        insert into student values(9031,'werty',1234,'is');
+        insert into student values(2444,'wertt',2345,'aero');
+        insert into student values(3455,'qwerrt',3456,'mech');
+        insert into student values(2344,'wrrwrvg',4567,'civ');
+        insert into student values(8901,'wrfgw',5678,'cs');
+        insert into student values(3245,'wregrg',6789,'mech');
+
+---
+
+**Query #1**
+
+    select * from student;
+
+| USN  | NAME    | PHNO | BRANCH |
+| ---- | ------- | ---- | ------ |
+| 2344 | wrrwrvg | 4567 | civ    |
+| 2444 | wertt   | 2345 | aero   |
+| 3245 | wregrg  | 6789 | mech   |
+| 3455 | qwerrt  | 3456 | mech   |
+| 8901 | wrfgw   | 5678 | cs     |
+| 9031 | werty   | 1234 | is     |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/)
