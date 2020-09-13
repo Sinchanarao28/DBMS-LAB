@@ -1,0 +1,61 @@
+create table BOOK(Book_id integer primary key,Title varchar(20),Publisher_Name varchar(20),Pub_year varchar(20));
+insert into BOOK values(01,'DBMS','AWEER','2012');
+insert into BOOK values(02,'DC','SOOA','2018');
+insert into BOOK values(03,'PYTHON','SDDSD','2020'); 
+insert into BOOK values(04,'ATC','RERR','2016'); 
+insert into BOOK values(05,'DBMS','ESDD','2012');
+create table book_copies(Book_id integer,Branch_id integer,No_of_copies integer, primary key(Book_id,Branch_id));   
+                                                                           
+Results
+
+---
+
+**Query #1**
+
+    select *from BOOK;
+
+| Book_id | Title  | Publisher_Name | Pub_year |
+| ------- | ------ | -------------- | -------- |
+| 1       | DBMS   | AWEER          | 2012     |
+| 2       | DC     | SOOA           | 2018     |
+| 3       | PYTHON | SDDSD          | 2020     |
+| 4       | ATC    | RERR           | 2016     |
+| 5       | DBMS   | ESDD           | 2012     |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/)
+Copy as Markdown
+Query #1 Execution time: 1ms
+
+
+DB Fiddle – Crafted with ♥ by Status200 in the United Kingdom.
+Results
+**Schema (MySQL v5.7)**
+
+    create table BOOK(Book_id integer primary key,Title varchar(20),Publisher_Name varchar(20),Pub_year varchar(20));
+    insert into BOOK values(01,'DBMS','AWEER','2012');
+    insert into BOOK values(02,'DC','SOOA','2018');
+    insert into BOOK values(03,'PYTHON','SDDSD','2020'); 
+    insert into BOOK values(04,'ATC','RERR','2016'); 
+    insert into BOOK values(05,'DBMS','ESDD','2012');
+    create table book_copies(Book_id integer,Branch_id integer,No_of_copies integer, primary key(Book_id,Branch_id));                                                                              
+
+---
+
+**Query #1**
+
+    select *from BOOK where book_id=03;
+
+| Book_id | Title  | Publisher_Name | Pub_year |
+| ------- | ------ | -------------- | -------- |
+| 3       | PYTHON | SDDSD          | 2020     |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/)
+Copy as Markdown
+Query #1 Execution time: 0ms
+Book_id	Title	Publisher_Name	Pub_year
+3	PYTHON	SDDSD	2020
+
