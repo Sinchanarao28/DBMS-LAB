@@ -1,0 +1,7 @@
+create table BOOK(Book_id integer primary key,Title varchar(20),Publisher_Name varchar(20),Pub_year varchar(20));
+insert into BOOK values(01,'DBMS','AWEER','2012');
+insert into BOOK values(02,'DC','SOOA','2018');
+insert into BOOK values(03,'PYTHON','SDDSD','2020'); 
+insert into BOOK values(04,'ATC','RERR','2016'); 
+insert into BOOK values(05,'DBMS','ESDD','2012');
+create table book_copies(Book_id integer,Branch_id integer,No_of_copies integer, primary key(Book_id,Branch_id));                                                                              
