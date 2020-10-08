@@ -50,9 +50,3 @@
 [View on DB Fiddle](https://www.db-fiddle.com/)
 Copy as Markdown
 Query #1 Execution time: 1ms
-Course_No	Cname	Dept
-100	DBMS	CS
-101	SE	ISE
-102	FSM	MECH
-103	CSE	AERO
-104	CAA	CIVIL
