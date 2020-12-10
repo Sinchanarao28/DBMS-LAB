@@ -1,0 +1,53 @@
+**Schema (MySQL v5.7)**
+
+    create table SALESMAN(Salesman_id integer primary key,Name varchar(20),City varchar(10),Commission integer);
+    create table CUSTOMER(Customer_id integer primary key,Cust_Name varchar(20),City varchar(10),Grade integer,Salesman_id integer,foreign key(Salesman_id) references SALESMAN(Salesman_id) on delete cascade);
+    create table ORDERS(Ord_No integer primary key,Purchace_Amt integer,Ord_Date date,Customer_id integer,Salesman_id integer,foreign key(Customer_id) references CUSTOMER(Customer_id)on delete cascade,foreign key(Salesman_id) references SALESMAN(Salesman_id)on delete cascade);
+    
+
+---
+
+**Query #1**
+
+    desc SALESMAN;
+
+| Field       | Type        | Null | Key | Default | Extra |
+| ----------- | ----------- | ---- | --- | ------- | ----- |
+| Salesman_id | int(11)     | NO   | PRI |         |       |
+| Name        | varchar(20) | YES  |     |         |       |
+| City        | varchar(10) | YES  |     |         |       |
+| Commission  | int(11)     | YES  |     |         |       |
+
+---
+
+
+**Query #2**
+
+    desc CUSTOMER;
+
+| Field       | Type        | Null | Key | Default | Extra |
+| ----------- | ----------- | ---- | --- | ------- | ----- |
+| Customer_id | int(11)     | NO   | PRI |         |       |
+| Cust_Name   | varchar(20) | YES  |     |         |       |
+| City        | varchar(10) | YES  |     |         |       |
+| Grade       | int(11)     | YES  |     |         |       |
+| Salesman_id | int(11)     | YES  | MUL |         |       |
+
+---
+
+
+
+**Query #3**
+
+    desc ORDERS;
+
+| Field        | Type    | Null | Key | Default | Extra |
+| ------------ | ------- | ---- | --- | ------- | ----- |
+| Ord_No       | int(11) | NO   | PRI |         |       |
+| Purchace_Amt | int(11) | YES  |     |         |       |
+| Ord_Date     | date    | YES  |     |         |       |
+| Customer_id  | int(11) | YES  | MUL |         |       |
+| Salesman_id  | int(11) | YES  | MUL |         |       |
+
+---
+
