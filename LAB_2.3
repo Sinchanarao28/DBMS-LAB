@@ -1,0 +1,45 @@
+    create table SALESMAN(Salesman_id integer primary key,Name varchar(20),City varchar(10),Commission integer);
+    create table CUSTOMER(Customer_id integer primary key,Cust_Name varchar(20),City varchar(10),Grade integer,Salesman_id integer,foreign key(Salesman_id) references SALESMAN(Salesman_id) on delete cascade);
+    create table ORDERS(Ord_No integer primary key,PurchaSe_Amt integer,Ord_Date date,Customer_id integer,Salesman_id integer,foreign key(Customer_id) references CUSTOMER(Customer_id)on delete cascade,foreign key(Salesman_id) references SALESMAN(Salesman_id)on delete cascade);
+    insert into SALESMAN values(10,'Akash','Mangalore',2);
+    insert into SALESMAN values(20,'Ram','Bangalore',10);
+    insert into SALESMAN values(30,'Raj','Mangalore',5);
+    insert into SALESMAN values(40,'Kiran','Mysore',15);
+    insert into SALESMAN values(50,'Shreya','Bangalore',3);
+    insert into CUSTOMER values(1000,'Avinash','Mangalore',100,10);
+    insert into CUSTOMER values(2000,'Kumar','Bangalore',200,20);
+    insert into CUSTOMER values(3000,'Preethi','Mysore',300,40);
+    insert into CUSTOMER values(4000,'Smitha','Mangalore',300,30);
+    insert into CUSTOMER values(5000,'Varshini','Bangalore',400,50);
+    insert into ORDERS values(551,5000,'2020-01-04',1000,10);
+    insert into ORDERS values(552,2500,'2020-02-05',2000,20);
+    insert into ORDERS values(553,500,'2020-03-03',3000,40);
+    insert into ORDERS values(554,1500,'2020-04-02',4000,30);
+    insert into ORDERS values(555,2000,'2020-06-03',2000,10);
+    
+
+---
+
+**Query #1**
+
+    create view Best_Salesman as select Salesman_id from ORDERS where Purchase_Amt in(select max(Purchase_Amt) from ORDERS group by Ord_Date);
+
+There are no results to be displayed.
+
+---
+
+**Query #2**
+
+    select * from Best_Salesman;
+
+| Salesman_id |
+| ----------- |
+| 10          |
+| 20          |
+| 40          |
+| 30          |
+| 10          |
+
+---
+
+[View on DB Fiddle](https://www.db-fi
