@@ -1,0 +1,203 @@
+**Schema (MySQL v5.7)**
+
+create table ACTOR(Act_id integer primary key,Act_Name varchar(20),Act_Gender varchar(1));
+create table DIRECTOR(Dir_id integer primary key,Dir_Name varchar(20),Dir_Phone varchar(10));
+create table MOVIES(Mov_id integer primary key,Mov_Title varchar(20),Mov_Year integer,Mov_Lang varchar(10),Dir_id integer,foreign key(Dir_id)references DIRECTOR(Dir_id)on delete cascade);
+create table MOVIE_CAST(Act_id integer,Mov_id integer,Role varchar(10),primary key(Act_id,Mov_id),foreign key(Act_id)references ACTOR(Act_id)on delete cascade,foreign key(Mov_id)references MOVIES(Mov_id)on delete cascade);
+create table RATING(Mov_id integer primary key,Rev_Stars integer,foreign key(Mov_id)references MOVIES(Mov_id)on delete cascade);
+insert into ACTOR values(300,'Radhika','F');
+insert into ACTOR values(301,'Prabhas','M');
+insert into ACTOR values(302,'Mr.Bean','M');
+insert into ACTOR values(303,'Tom Cruse','M');                                                           
+insert into ACTOR values(304,'Alia','F');
+insert into DIRECTOR values(100,'Rajamouli','9980903528');
+insert into DIRECTOR values(101,'Hitchcock','8951797978');
+insert into DIRECTOR values(102,'Sam','9876543210');
+insert into DIRECTOR values(103,'Shruthi','9113937543');
+insert into DIRECTOR values(104,'Stevan Spielberg','9988776655');
+insert into MOVIES values(1001,'Titanic',2003,'English',102);
+insert into MOVIES values(1002,'Mirzapur',2020,'Hindi',102);
+insert into MOVIES values(1003,'Parasite',2019,'English',103);
+insert into MOVIES values(1004,'Ludo',2018,'Hindi',101);
+insert into MOVIES values(1005,'Mungaru Male',2008,'Kannada',104);
+insert into MOVIE_CAST values(300,1003,'Heroine');
+insert into MOVIE_CAST values(301,1001,'Hero');
+insert into MOVIE_CAST values(302,1004,'Guest');
+insert into MOVIE_CAST values(301,1002,'Villain');
+insert into MOVIE_CAST values(304,1005,'Heroine');
+insert into RATING values(1001,9);
+insert into RATING values(1002,7);
+insert into RATING values(1003,9);
+insert into RATING values(1004,6);
+insert into RATING values(1005,0);
+
+---
+
+**Query #1**
+
+    desc ACTOR;
+
+| Field      | Type        | Null | Key | Default | Extra |
+| ---------- | ----------- | ---- | --- | ------- | ----- |
+| Act_id     | int(11)     | NO   | PRI |         |       |
+| Act_Name   | varchar(20) | YES  |     |         |       |
+| Act_Gender | varchar(1)  | YES  |     |         |       |
+
+--
+**Query #2**
+
+    desc DIRECTOR;
+
+| Field     | Type        | Null | Key | Default | Extra |
+| --------- | ----------- | ---- | --- | ------- | ----- |
+| Dir_id    | int(11)     | NO   | PRI |         |       |
+| Dir_Name  | varchar(20) | YES  |     |         |       |
+| Dir_Phone | varchar(10) | YES  |     |         |       |
+
+---
+
+**Query #3**
+
+    desc MOVIES;
+
+| Field     | Type        | Null | Key | Default | Extra |
+| --------- | ----------- | ---- | --- | ------- | ----- |
+| Mov_id    | int(11)     | NO   | PRI |         |       |
+| Mov_Title | varchar(20) | YES  |     |         |       |
+| Mov_Year  | int(11)     | YES  |     |         |       |
+| Mov_Lang  | varchar(10) | YES  |     |         |       |
+| Dir_id    | int(11)     | YES  | MUL |         |       |
+
+---
+
+
+**Query #4**
+
+    desc MOVIE_CAST;
+
+| Field  | Type        | Null | Key | Default | Extra |
+| ------ | ----------- | ---- | --- | ------- | ----- |
+| Act_id | int(11)     | NO   | PRI |         |       |
+| Mov_id | int(11)     | NO   | PRI |         |       |
+| Role   | varchar(10) | YES  |     |         |       |
+
+---
+
+
+**Query #5**
+
+    desc RATING;
+
+| Field     | Type    | Null | Key | Default | Extra |
+| --------- | ------- | ---- | --- | ------- | ----- |
+| Mov_id    | int(11) | NO   | PRI |         |       |
+| Rev_Stars | int(11) | YES  |     |         |       |
+
+---
+
+
+**Query #6**
+
+    select * from ACTOR;
+
+| Act_id | Act_Name  | Act_Gender |
+| ------ | --------- | ---------- |
+| 300    | Radhika   | F          |
+| 301    | Prabhas   | M          |
+| 302    | Mr.Bean   | M          |
+| 303    | Tom Cruse | M          |
+| 304    | Alia      | F          |
+
+---
+
+
+**Query #7**
+
+    select * from DIRECTOR;
+
+| Dir_id | Dir_Name         | Dir_Phone  |
+| ------ | ---------------- | ---------- |
+| 100    | Rajamouli        | 9980903528 |
+| 101    | Hitchcock        | 8951797978 |
+| 102    | Sam              | 9876543210 |
+| 103    | Shruthi          | 9113937543 |
+| 104    | Stevan Spielberg | 9988776655 |
+
+---
+
+**Query #8**
+
+    select * from MOVIES;
+
+| Mov_id | Mov_Title    | Mov_Year | Mov_Lang | Dir_id |
+| ------ | ------------ | -------- | -------- | ------ |
+| 1001   | Titanic      | 2003     | English  | 102    |
+| 1002   | Mirzapur     | 2020     | Hindi    | 102    |
+| 1003   | Parasite     | 2019     | English  | 103    |
+| 1004   | Ludo         | 2018     | Hindi    | 101    |
+| 1005   | Mungaru Male | 2008     | Kannada  | 104    |
+
+---
+
+
+**Query #9**
+
+    select * from MOVIE_CAST;
+
+| Act_id | Mov_id | Role    |
+| ------ | ------ | ------- |
+| 300    | 1003   | Heroine |
+| 301    | 1001   | Hero    |
+| 301    | 1002   | Villain |
+| 302    | 1004   | Guest   |
+| 304    | 1005   | Heroine |
+
+---
+
+**Query #10**
+
+    select * from RATING;
+
+| Mov_id | Rev_Stars |
+| ------ | --------- |
+| 1001   | 9         |
+| 1002   | 7         |
+| 1003   | 9         |
+| 1004   | 6         |
+| 1005   | 0         |
+
+---
+
+**Query #11**
+
+    select Mov_Title from MOVIES M,DIRECTOR D where M.Dir_id=D.Dir_id and Dir_Name="Hitchcock";
+
+| Mov_Title |
+| --------- |
+| Ludo      |
+
+---
+
+**Query #12**
+
+    select Mov_Title from MOVIES M where Dir_id in(select D.Dir_id from DIRECTOR D where D.Dir_id=M.Dir_id and D.Dir_Name="Hitchcock");
+
+| Mov_Title |
+| --------- |
+| Ludo      |
+
+---
+
+**Query #13**
+
+    select Mov_Title from MOVIES M,MOVIE_CAST MC where M.Mov_id=MC.Mov_id and Act_id in(select Act_id from MOVIE_CAST group by Act_id having count(*)>1);
+
+| Mov_Title |
+| --------- |
+| Titanic   |
+| Mirzapur  |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/)
+
