@@ -1,0 +1,222 @@
+**Schema (MySQL v5.7)**
+
+        create table STUDENT(USN varchar(20) primary key,SName varchar(20),Address varchar(20),Phone long,Gender varchar(10));
+                                                                                                                         
+        create table SEMSEC(SSID integer primary key,Sem integer,Sec varchar(5));
+                                                                             
+        create table CLASS(USN varchar(20) primary key,SSID integer,foreign key(USN) references STUDENT(USN),foreign key(SSID) references SEMSEC(SSID));
+                                                                                                                                                 
+        create table COURSE(Subcode varchar(20) primary key,Title varchar(20),Sem integer,Credits integer);
+                                                                                                                                                 
+        create table IAMARKS(USN varchar(20),Subcode varchar(20),SSID integer,Test1 integer,Test2 integer,Test3 integer,FinalIA integer,primary key(USN,Subcode,SSID),foreign key(USN) references STUDENT(USN),foreign key(Subcode) references COURSE(Subcode),foreign key(ssid) references SEMSEC(ssid));
+        
+        insert into STUDENT values('CS101','Mike','Manglore',9696500000,'Male');
+        insert into STUDENT values('CS102','Joyce','Banglore',9496500000,'Female');
+        insert into STUDENT values('CS103','Dustin','Mysore',9696400000,'Male');
+        insert into STUDENT values('CS104','Lucas','Manglore',9697500000,'Male');
+        insert into STUDENT values('CS105','Nancy','Banglore',9698500000,'Female');
+        
+        insert into SEMSEC values(111,8,'B');
+        insert into SEMSEC values(112,4,'C');
+        insert into SEMSEC values(113,8,'B');
+        insert into SEMSEC values(114,5,'A');
+        insert into SEMSEC values(115,4,'C');
+        
+        insert into CLASS values('CS101',113);
+        insert into CLASS values('CS102',115);
+        insert into CLASS values('CS103',111);
+        insert into CLASS values('CS104',112);
+        insert into CLASS values('CS105',114);
+        
+        insert into COURSE values('18CS41','ATC',4,3);
+        insert into COURSE values('18CS82','DBMS',8,4);
+        insert into COURSE values('18CS53','UP',5,2);
+        insert into COURSE values('18CS44','ME',4,3);
+        insert into COURSE values('18CS85','CNS',8,4);
+        
+        insert into IAMARKS values('CS101','18CS41',113,10,16,17,17);
+        insert into IAMARKS values('CS101','18CS82',113,10,10,17,14);
+        insert into IAMARKS values('CS101','18CS53',113,10,10,15,13);
+        insert into IAMARKS values('CS101','18CS44',113,10,16,11,14);
+        insert into IAMARKS values('CS101','18CS85',113,10,16,10,13);
+        insert into IAMARKS values('CS103','18CS41',111,15,12,14,15);
+        insert into IAMARKS values('CS103','18CS82',111,11,17,10,13);
+        insert into IAMARKS values('CS103','18CS53',111,8,2,1,5);
+        insert into IAMARKS values('CS103','18CS44',111,15,5,10,14);
+        insert into IAMARKS values('CS103','18CS85',111,19,16,10,18);
+    
+
+---
+
+**Query #1**
+
+    select * from STUDENT;
+
+| USN   | SName  | Address  | Phone      | Gender |
+| ----- | ------ | -------- | ---------- | ------ |
+| CS101 | Mike   | Manglore | 9696500000 | Male   |
+| CS102 | Joyce  | Banglore | 9496500000 | Female |
+| CS103 | Dustin | Mysore   | 9696400000 | Male   |
+| CS104 | Lucas  | Manglore | 9697500000 | Male   |
+| CS105 | Nancy  | Banglore | 9698500000 | Female |
+
+---
+**Query #2**
+
+    select * from SEMSEC;
+
+| SSID | Sem | Sec |
+| ---- | --- | --- |
+| 111  | 8   | B   |
+| 112  | 4   | C   |
+| 113  | 8   | B   |
+| 114  | 5   | A   |
+| 115  | 4   | C   |
+
+---
+**Query #3**
+
+    select * from CLASS;
+
+| USN   | SSID |
+| ----- | ---- |
+| CS103 | 111  |
+| CS104 | 112  |
+| CS101 | 113  |
+| CS105 | 114  |
+| CS102 | 115  |
+
+---
+**Query #4**
+
+    select * from COURSE;
+
+| Subcode | Title | Sem | Credits |
+| ------- | ----- | --- | ------- |
+| 18CS41  | ATC   | 4   | 3       |
+| 18CS44  | ME    | 4   | 3       |
+| 18CS53  | UP    | 5   | 2       |
+| 18CS82  | DBMS  | 8   | 4       |
+| 18CS85  | CNS   | 8   | 4       |
+
+---
+**Query #5**
+
+    select * from IAMARKS;
+
+| USN   | Subcode | SSID | Test1 | Test2 | Test3 | FinalIA |
+| ----- | ------- | ---- | ----- | ----- | ----- | ------- |
+| CS101 | 18CS41  | 113  | 10    | 16    | 17    | 17      |
+| CS101 | 18CS44  | 113  | 10    | 16    | 11    | 14      |
+| CS101 | 18CS53  | 113  | 10    | 10    | 15    | 13      |
+| CS101 | 18CS82  | 113  | 10    | 10    | 17    | 14      |
+| CS101 | 18CS85  | 113  | 10    | 16    | 10    | 13      |
+| CS103 | 18CS41  | 111  | 15    | 12    | 14    | 15      |
+| CS103 | 18CS44  | 111  | 15    | 5     | 10    | 14      |
+| CS103 | 18CS53  | 111  | 8     | 2     | 1     | 5       |
+| CS103 | 18CS82  | 111  | 11    | 17    | 10    | 13      |
+| CS103 | 18CS85  | 111  | 19    | 16    | 10    | 18      |
+
+---
+**Query #6**
+
+    select * from STUDENT S,SEMSEC SS, CLASS C 
+    where S.USN=C.USN and C.SSID=SS.SSID and Sem=4 and Sec='C';
+
+| USN   | SName | Address  | Phone      | Gender | SSID | Sem | Sec | USN   | SSID |
+| ----- | ----- | -------- | ---------- | ------ | ---- | --- | --- | ----- | ---- |
+| CS104 | Lucas | Manglore | 9697500000 | Male   | 112  | 4   | C   | CS104 | 112  |
+| CS102 | Joyce | Banglore | 9496500000 | Female | 115  | 4   | C   | CS102 | 115  |
+
+---
+**Query #7**
+
+    select Sem ,Sec,Gender,count(*) 
+    from STUDENT S,SEMSEC SS,CLASS C 
+    where S.USN=C.USN and C.SSID=SS.SSID 
+    group by Sem,Sec,Gender 
+    order by Sem;
+
+| Sem | Sec | Gender | count(*) |
+| --- | --- | ------ | -------- |
+| 4   | C   | Female | 1        |
+| 4   | C   | Male   | 1        |
+| 5   | A   | Female | 1        |
+| 8   | B   | Male   | 2        |
+
+---
+**Query #8**
+
+    create view T1 as 
+    select Subcode, Test1 
+    from IAMARKS 
+    where USN='CS101';
+
+There are no results to be displayed.
+
+---
+**Query #9**
+
+    select * from T1;
+
+| Subcode | Test1 |
+| ------- | ----- |
+| 18CS41  | 10    |
+| 18CS44  | 10    |
+| 18CS53  | 10    |
+| 18CS82  | 10    |
+| 18CS85  | 10    |
+
+---
+**Query #10**
+
+    update IAMARKS
+    set FinalIA=((Test1+Test2+Test3)- least(Test1,Test2,Test3))/2;
+
+There are no results to be displayed.
+
+---
+**Query #11**
+
+    select * from IAMARKS;
+
+| USN   | Subcode | SSID | Test1 | Test2 | Test3 | FinalIA |
+| ----- | ------- | ---- | ----- | ----- | ----- | ------- |
+| CS101 | 18CS41  | 113  | 10    | 16    | 17    | 17      |
+| CS101 | 18CS44  | 113  | 10    | 16    | 11    | 14      |
+| CS101 | 18CS53  | 113  | 10    | 10    | 15    | 13      |
+| CS101 | 18CS82  | 113  | 10    | 10    | 17    | 14      |
+| CS101 | 18CS85  | 113  | 10    | 16    | 10    | 13      |
+| CS103 | 18CS41  | 111  | 15    | 12    | 14    | 15      |
+| CS103 | 18CS44  | 111  | 15    | 5     | 10    | 13      |
+| CS103 | 18CS53  | 111  | 8     | 2     | 1     | 5       |
+| CS103 | 18CS82  | 111  | 11    | 17    | 10    | 14      |
+| CS103 | 18CS85  | 111  | 19    | 16    | 10    | 18      |
+
+---
+**Query #12**
+
+    select S.USN, S.SName, FinalIA,(
+      case
+      when FinalIA>=17 and FinalIA<=20 then 'Outstanding'
+      when FinalIA>=12 and FinalIA<=17 then 'Average'
+      when FinalIA<=12 then 'Weak' END)
+    CAT from STUDENT S, IAMARKS IA, CLASS C, SEMSEC SS
+    where S.USN=IA.USN and S.USN=C.USN and C.SSID=SS.SSID and Sem=8 and (Sec='A' or Sec='B' or Sec='C');
+
+| USN   | SName  | FinalIA | CAT         |
+| ----- | ------ | ------- | ----------- |
+| CS101 | Mike   | 17      | Outstanding |
+| CS101 | Mike   | 14      | Average     |
+| CS101 | Mike   | 13      | Average     |
+| CS101 | Mike   | 14      | Average     |
+ś| CS101 | Mike   | 13      | Average     |
+| CS103 | Dustin | 15      | Average     |
+| CS103 | Dustin | 13      | Average     |
+| CS103 | Dustin | 5       | Weak        |
+| CS103 | Dustin | 14      | Average     |
+| CS103 | Dustin | 18      | Outstanding |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/)
